@@ -16,14 +16,13 @@ public class Calculadora {
 
    public int dividir(int a, int b) {
       if (b == 0) {
-         System.out.println("Erro! Divisão não pode divisão por zero.");
+         System.out.println("ERRO! Divisão por zero não é permitida");
          return 0;
       }
       return a / b;
    }
 
    public static void main(String[] args) {
-
       Calculadora calc = new Calculadora();
 
       System.out.println("Soma: " + calc.somar(10, 5));
@@ -31,5 +30,6 @@ public class Calculadora {
       System.out.println("Multiplicação: " + calc.multiplicar(10, 5));
       System.out.println("Divisão: " + calc.dividir(10, 5));
    }
+
 
 }
