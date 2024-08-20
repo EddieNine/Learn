@@ -11,9 +11,10 @@ public class Palindromo {
 
         String palavra = "Radar";
         if(verificador.isPalindromo(palavra)) {
-            System.out.println(palavra + " é um palíndromo.");
+            System.out.println(palavra + " é um palíndromo");
         } else {
-            System.out.println(palavra + " não é um palíndromo.");
+            System.out.println(palavra + " não é um palíndromo");
         }
     }
+
 }
