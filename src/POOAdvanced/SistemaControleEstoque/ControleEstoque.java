@@ -1,6 +1,7 @@
 package POOAdvanced.SistemaControleEstoque;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ControleEstoque implements Estoque{
@@ -34,5 +35,21 @@ public class ControleEstoque implements Estoque{
             }
         }
         System.out.println("Produto não encontrado!");
+    }
+
+    public void ordernarPorNome(){
+        produtos.sort(Comparator.comparing(Produto::getNome));
+        System.out.println("Produtos ordenados por nome!");
+    }
+
+    public void ordenarPorPreco() {
+        produtos.sort(Comparator.comparing(Produto::getPreco));
+        System.out.println("Produtos ordenados por preço!");
+    }
+
+    public void exibirProdutos() {
+        for (Produto produto: produtos) {
+            System.out.println(produto.getNome() + " - " + produto.getPreco());
+        }
     }
 }
