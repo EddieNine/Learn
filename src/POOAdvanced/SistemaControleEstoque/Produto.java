@@ -15,6 +15,18 @@ public class Produto {
         return nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
+        this.quantidadeEmEstoque = quantidadeEmEstoque;
+    }
+
     public void adcionarEstoque(int quantidade) {
         quantidadeEmEstoque += quantidade;
     }

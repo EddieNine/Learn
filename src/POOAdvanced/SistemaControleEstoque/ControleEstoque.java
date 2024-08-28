@@ -22,4 +22,17 @@ public class ControleEstoque implements Estoque{
             System.out.println("---------------");
         }
     }
+
+    public void atualizarProduto(String nome, String novoNome, double novoPreco, int novaQuantidade) {
+        for(Produto produto : produtos) {
+            if(produto.getNome().equals(nome)) {
+                produto.setNome(novoNome);
+                produto.setPreco(novoPreco);
+                produto.setQuantidadeEmEstoque(novaQuantidade);
+                System.out.println("Produto atualizado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Produto não encontrado!");
+    }
 }
