@@ -1,7 +1,11 @@
 package GUI;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +14,7 @@ public class JanelaComCaixaDeTexto {
         // Criar uma nova janela
         JFrame frame = new JFrame("Janela com Caixa de Texto");
         frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Definir layout da janela
         frame.setLayout(new FlowLayout());
@@ -31,6 +35,7 @@ public class JanelaComCaixaDeTexto {
 
         // Adicionar ação ao botão
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String texto = textField.getText(); // Obter texto da caixa de texto
                 textArea.setText(texto); // Exibir texto na área de texto
@@ -43,7 +48,7 @@ public class JanelaComCaixaDeTexto {
         frame.add(button);
         frame.add(textArea);
 
-        // Tornar a janela visivel
+        // Tornar a janela visível
         frame.setVisible(true);
     }
 }
