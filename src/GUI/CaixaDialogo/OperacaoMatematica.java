@@ -25,7 +25,6 @@ public class OperacaoMatematica {
 
                 int operacao = Integer.parseInt(operacaoInput);
 
-
                 String num1Input = JOptionPane.showInputDialog("Digite o primeiro valor:");
                 if (num1Input == null) break;
                 int num1 = Integer.parseInt(num1Input);
