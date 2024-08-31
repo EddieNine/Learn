@@ -15,7 +15,7 @@ public class OperacaoMatematica {
                         [2] SUBTRAÇÃO
                         [3] MULTIPLICAÇÃO
                         [4] DIVISÃO
-                        [0] SAIR""");
+                        Clique em "CANCELAR" para sair""");
 
                 if (operacaoInput == null) {
                     // Se o usuário clicar em "Cancelar", encerra o programa
@@ -25,10 +25,6 @@ public class OperacaoMatematica {
 
                 int operacao = Integer.parseInt(operacaoInput);
 
-                if (operacao == 0) {
-                    JOptionPane.showMessageDialog(null, "Programa encerrado.");
-                    break;
-                }
 
                 String num1Input = JOptionPane.showInputDialog("Digite o primeiro valor:");
                 if (num1Input == null) break;
