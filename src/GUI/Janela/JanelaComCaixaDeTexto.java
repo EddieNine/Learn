@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Janela;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
