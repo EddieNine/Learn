@@ -20,7 +20,7 @@ public class JanelaComMenu {
 
         // Criar os itens de menu para o menu "Arquivo"
         JMenuItem itemNovo = new JMenuItem("Novo");
-        JMenuItem itemABrir = new JMenuItem("Abrir");
+        JMenuItem itemAbrir = new JMenuItem("Abrir");
         JMenuItem itemSair = new JMenuItem("Sair");
 
         // Criar os itens de menu para o menu "Editar"
@@ -29,8 +29,8 @@ public class JanelaComMenu {
 
         // Adicionar os itens ao menu "Arquivo"
         menuArquivo.add(itemNovo);
-        menuArquivo.add(itemABrir);
-        menuArquivo.addSeparator(); // Adiciona um seperador entre itens
+        menuArquivo.add(itemAbrir);
+        menuArquivo.addSeparator(); // Adiciona um separador entre itens
         menuArquivo.add(itemSair);
 
         // Adicionar os itens ao menu "Editar"
@@ -46,12 +46,13 @@ public class JanelaComMenu {
 
         // Ação para o item "Sair"
         itemSair.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0); // Encerra a aplicação
             }
         });
 
-        // Tornar a janela visivel
+        // Tornar a janela visível
         frame.setVisible(true);
     }
 }
