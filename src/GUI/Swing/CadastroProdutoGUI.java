@@ -1,11 +1,15 @@
 package GUI.Swing;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CadastroProdutoGUI {
     private List<String> produtos = new ArrayList<>();
+    private static final String ARQUIVO_PRODUTOS = "src/GUI/Swing/produtos.txt";
 
     public CadastroProdutoGUI() {
         JFrame frame = new JFrame("Cadastro de Produto");
@@ -30,18 +34,11 @@ public class CadastroProdutoGUI {
 
         JButton salvarButton = new JButton("Salvar");
         salvarButton.setBounds(50, 200, 150, 30);
-        salvarButton.addActionListener(e -> {
-            String produto = nomeField.getText() + " - R$ " + precoField.getText() + " - Quantidade: " + quantidadeField.getText();
-            produtos.add(produto);
-            JOptionPane.showMessageDialog(null, "Produto salvo: " + produto);
-            nomeField.setText("");
-            precoField.setText("");
-            quantidadeField.setText("");
-        });
+        salvarButton.addActionListener(e -> salvarProduto(nomeField, precoField, quantidadeField));
 
         JButton exibirButton = new JButton("Exibir Produtos");
         exibirButton.setBounds(50, 240, 150, 30);
-        exibirButton.addActionListener(e -> JOptionPane.showMessageDialog(null, produtos.toString()));
+        exibirButton.addActionListener(e -> exibirProdutos());
 
         frame.add(nomeLabel);
         frame.add(nomeField);
@@ -56,6 +53,54 @@ public class CadastroProdutoGUI {
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void salvarProduto(JTextField nomeField, JTextField precoField, JTextField quantidadeField) {
+        String nome = nomeField.getText();
+        String precoText = precoField.getText();
+        String quantidadeText = quantidadeField.getText();
+
+        if (nome.isEmpty() || precoText.isEmpty() || quantidadeText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos os campos ser preenchidos.");
+            return;
+        }
+
+        try {
+            double preco = Double.parseDouble(precoText);
+            int quantidade = Integer.parseInt(quantidadeText);
+
+            String produto = String.format("Nome: %s | Preço: R$ %.2f | Quantidade: %d", nome, preco, quantidade);
+            produtos.add(produto);
+            salvarProdutoNoArquivo(produto);
+            JOptionPane.showMessageDialog(null, "Produto salvo:\n" + produto);
+
+            nomeField.setText("");
+            precoField.setText("");
+            quantidadeField.setText("");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Nenhum produto cadastrado.");
+        }
+    }
+
+    private void salvarProdutoNoArquivo(String produto) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_PRODUTOS, true))) {
+            writer.write(produto);
+            writer.newLine();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o produto no arquivo.");
+        }
+    }
+
+    private void exibirProdutos(){
+        if (produtos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum produto cadastrado.");
+        } else {
+            StringBuilder listaProdutos = new StringBuilder();
+            for (String produto : produtos) {
+                listaProdutos.append(produto).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, listaProdutos.toString());
+        }
     }
 
     public static void main(String[] args) {
