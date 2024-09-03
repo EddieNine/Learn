@@ -33,7 +33,6 @@ public class ConfiguracoesJanela {
             dialog.setLocationRelativeTo(frame);
             dialog.setVisible(true);
         });
-
         frame.setVisible(true);
     }
 }
