@@ -4,3 +4,4 @@ Nome: Teste3 | Preço: R$ 15,00 | Quantidade: 50
 Nome: Teste4 | Preço: R$ 16,00 | Quantidade: 10
 Nome: teste | Preço: R$ 15,00 | Quantidade: 2
 Nome: Aqui | Preço: R$ 15,00 | Quantidade: 2
+Nome: Edcarlos | Preço: R$ 45,00 | Quantidade: 20

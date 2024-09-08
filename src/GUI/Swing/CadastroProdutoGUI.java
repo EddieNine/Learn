@@ -1,6 +1,7 @@
 package GUI.Swing;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class CadastroProdutoGUI {
         exibirButton.setBounds(50, 240, 150, 30);
         exibirButton.addActionListener(e -> exibirProdutos());
 
+
         frame.add(nomeLabel);
         frame.add(nomeField);
         frame.add(precoLabel);
@@ -55,12 +57,14 @@ public class CadastroProdutoGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+
     private void salvarProduto(JTextField nomeField, JTextField precoField, JTextField quantidadeField) {
         String nome = nomeField.getText();
         String precoText = precoField.getText();
         String quantidadeText = quantidadeField.getText();
 
         if (nome.isEmpty() || precoText.isEmpty() || quantidadeText.isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "Todos os campos ser preenchidos.");
             return;
         }
@@ -78,6 +82,7 @@ public class CadastroProdutoGUI {
             precoField.setText("");
             quantidadeField.setText("");
         } catch (NumberFormatException ex) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "Nenhum produto cadastrado.");
         }
     }
@@ -87,12 +92,14 @@ public class CadastroProdutoGUI {
             writer.write(produto);
             writer.newLine();
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "Erro ao salvar o produto no arquivo.");
         }
     }
 
     private void exibirProdutos(){
         if (produtos.isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(null, "Nenhum produto cadastrado.");
         } else {
             StringBuilder listaProdutos = new StringBuilder();
