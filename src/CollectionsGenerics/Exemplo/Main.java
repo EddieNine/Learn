@@ -1,4 +1,4 @@
-package CollectionsGenerics;
+package CollectionsGenerics.Exemplo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

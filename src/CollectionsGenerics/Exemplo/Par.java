@@ -1,4 +1,4 @@
-package CollectionsGenerics;
+package CollectionsGenerics.Exemplo;
 
 public class Par<T, U> {
     private T primeiro;
