@@ -1,7 +1,5 @@
-Nome: Teste | Preço: R$ 15,50 | Quantidade: 20
-Nome: Teste2 | Preço: R$ 20,25 | Quantidade: 10
-Nome: Teste3 | Preço: R$ 15,00 | Quantidade: 50
-Nome: Teste4 | Preço: R$ 16,00 | Quantidade: 10
-Nome: teste | Preço: R$ 15,00 | Quantidade: 2
-Nome: Aqui | Preço: R$ 15,00 | Quantidade: 2
-Nome: Edcarlos | Preço: R$ 45,00 | Quantidade: 20
+Nome: novo | Preço: R$ 45,00 | Quantidade: 50
+Nome: Novoaqui | Preço: R$ 0,00 | Quantidade: 0
+Nome: funciona | Preço: R$ 0,00 | Quantidade: 0
+Nome: novo | Preço: R$ 0,00 | Quantidade: 0
+Nome: new | Preço: R$ 0,00 | Quantidade: 0

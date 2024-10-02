@@ -5,7 +5,7 @@ import java.util.Stack;
 public class PilhaExemplo {
     public static void main(String[] args) {
         Stack<Integer> pilha = new Stack<>();
-        
+
         pilha.push(10);
         pilha.push(20);
         pilha.push(30);

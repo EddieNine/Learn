@@ -19,7 +19,7 @@ public class Main {
 
         // Criando um iterador para percorrer a lista
         Iterator<Produto> iterator = produtos.iterator();
-        
+
         // Removendo produtos com preco menor que 50
         while (iterator.hasNext()) {
             Produto produto = iterator.next();
@@ -27,7 +27,7 @@ public class Main {
                 iterator.remove(); // Removendo o produto
             }
         }
-        
+
         // Exibindo a lista de produtos restantes
         System.out.println("Produtos com preço maior ou igual a 50.00:");
         for (Produto produto : produtos) {

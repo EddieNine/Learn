@@ -12,10 +12,10 @@ public class ExemploIteratorRemove {
         numeros.add(2);
         numeros.add(12);
         numeros.add(3);
-        
+
         // Criando um iterador para a lista de numeros
         Iterator<Integer> iterator = numeros.iterator();
-        
+
         // Removendo todos os números menores que 10
         while (iterator.hasNext()) {
             Integer numero = iterator.next();
@@ -23,7 +23,7 @@ public class ExemploIteratorRemove {
                 iterator.remove(); // Removendo o número da lista
             }
         }
-        
+
         // imprimindo a lista atualizada
         System.out.println("Números maiores ou iguais a 10: " + numeros);
     }

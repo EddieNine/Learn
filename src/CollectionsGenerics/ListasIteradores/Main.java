@@ -17,7 +17,7 @@ public class Main {
         numeros.add(20);
 
         Iterator<Integer> iterator = numeros.iterator();
-        
+
         while (iterator.hasNext()){
             Integer numero = iterator.next();
             if(numero < 10) {

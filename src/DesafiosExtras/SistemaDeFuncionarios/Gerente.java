@@ -13,7 +13,7 @@ public class Gerente extends Funcionario{
     public double calcularBonus(){
         return super.calcularBonus() + bonusExtra;
     }
-    
+
     @Override
     public void exibirInfo(){
         super.exibirInfo();

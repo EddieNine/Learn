@@ -111,6 +111,6 @@ public class CadastroProdutoGUI {
     }
 
     public static void main(String[] args) {
-        new CadastroProdutoGUI();
+        new GUI.Swing.CadastroProdutoGUI();
     }
 }

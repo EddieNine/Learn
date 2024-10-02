@@ -21,7 +21,7 @@ public class Main {
                 .sorted()
                 .toList();
         System.out.println("Nomes que começam com a letra 'J': " + nomesComJ);
-        
+
         long quantidadeDeNomesComJ = nomes.stream().filter(n -> n.startsWith("J")).count();
         System.out.println("Quantidade de nomes que começam com 'J': "+ quantidadeDeNomesComJ);
     }
