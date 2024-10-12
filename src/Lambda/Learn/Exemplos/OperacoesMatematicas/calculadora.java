@@ -1,4 +1,4 @@
-package Lambda.Learn.Exemplos;
+package Lambda.Learn.Exemplos.OperacoesMatematicas;
 
 public class calculadora {
     public static void main(String[] args) {
