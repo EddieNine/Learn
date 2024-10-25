@@ -9,7 +9,7 @@ public class AppSettings {
         settings.put("theme","dark");
         settings.put("language","English");
         settings.put("notifications","enabled");
-        
+
         // Acessar uma configuração
         System.out.println("Current theme: " + settings.get("theme"));
     }
