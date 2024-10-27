@@ -11,6 +11,7 @@ public class JogoDaVelha extends JFrame implements ActionListener {
     private int pontosX = 0;
     private int pontosO = 0;
     private JLabel placar;
+    private JButton btnReiniciarPlacar;
 
     public JogoDaVelha(){
         setTitle("Jogo da Velha");
@@ -32,7 +33,22 @@ public class JogoDaVelha extends JFrame implements ActionListener {
         placar = new JLabel("Placar - X: 0 | O: 0", JLabel.CENTER);
         placar.setFont(new Font("Arial", Font.BOLD, 20));
 
-        add(placar, BorderLayout.NORTH);
+        btnReiniciarPlacar = new JButton("Reiniciar Placar");
+        btnReiniciarPlacar.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnReiniciarPlacar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                pontosX = 0;
+                pontosO = 0;
+                atualizarPlacar();
+            }
+        });
+
+        JPanel painelInferior = new JPanel();
+        painelInferior.setLayout(new BorderLayout());
+        painelInferior.add(placar, BorderLayout.NORTH);
+        painelInferior.add(btnReiniciarPlacar, BorderLayout.SOUTH);
+
+        add(painelInferior, BorderLayout.NORTH);
         add(painelJogo, BorderLayout.CENTER);
 
         setVisible(true);
