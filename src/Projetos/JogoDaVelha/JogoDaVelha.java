@@ -8,20 +8,32 @@ import java.awt.event.ActionListener;
 public class JogoDaVelha extends JFrame implements ActionListener {
     private JButton[] buttons = new JButton[9];
     private boolean jogadorX = true;
+    private int pontosX = 0;
+    private int pontosO = 0;
+    private JLabel placar;
 
     public JogoDaVelha(){
         setTitle("Jogo da Velha");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(3, 3));
+        setLayout(new BorderLayout());
+
+        JPanel painelJogo = new JPanel();
+        painelJogo.setLayout(new GridLayout(3, 3));
 
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton("");
             buttons[i].setFont(new Font("Arial", Font.BOLD, 60));
             buttons[i].setFocusPainted(false);
             buttons[i].addActionListener(this);
-            add(buttons[i]);
+            painelJogo.add(buttons[i]);
         }
+
+        placar = new JLabel("Placar - X: 0 | O: 0", JLabel.CENTER);
+        placar.setFont(new Font("Arial", Font.BOLD, 20));
+
+        add(placar, BorderLayout.NORTH);
+        add(painelJogo, BorderLayout.CENTER);
 
         setVisible(true);
     }
@@ -51,7 +63,16 @@ public class JogoDaVelha extends JFrame implements ActionListener {
 
         for (String[] linha : padraoVitoria) {
             if (linha[0].equals(linha[1]) && linha[0].equals(linha[2]) && !linha[0].equals("")) {
+                String vencedor = linha[0];
                 JOptionPane.showMessageDialog(this, "Jogador " + linha[0] + " venceu!");
+
+                if(vencedor.equals("X")) {
+                    pontosX++;
+                } else {
+                    pontosO++;
+                }
+
+                atualizarPlacar();
                 resetarJogo();
                 return;
             }
@@ -70,6 +91,10 @@ public class JogoDaVelha extends JFrame implements ActionListener {
             resetarJogo();
         }
 
+    }
+
+    public void atualizarPlacar(){
+        placar.setText("Placar - X: " +pontosX+ " | O: " +pontosO);
     }
 
     public void resetarJogo(){
