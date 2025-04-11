@@ -1,4 +1,4 @@
-package Inicio.Construtor;
+package Inicio.ConstrutorEncapsulamento;
 
 public class Main3 {
     public static void main(String[] args) {

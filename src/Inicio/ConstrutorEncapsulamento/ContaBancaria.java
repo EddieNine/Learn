@@ -1,4 +1,4 @@
-package Inicio.Construtor;
+package Inicio.ConstrutorEncapsulamento;
 
 public class ContaBancaria {
     private String titular;
