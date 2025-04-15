@@ -2,26 +2,37 @@ package SnakeGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
+    enum Difficulty {
+        EASY, MEDIUM, HARD
+    }
+
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
-    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
-    int delay = 75;
-    final int x[] = new int[GAME_UNITS];
-    final int y[] = new int[GAME_UNITS];
+    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
+
+    final int[] x = new int[GAME_UNITS];
+    final int[] y = new int[GAME_UNITS];
+
     int bodyParts = 6;
     int applesEaten;
     int appleX;
     int appleY;
-    char direction = 'R'; // 'U', 'D', 'L', 'R'
+    char direction = 'R';
     boolean running = false;
     Timer timer;
     Random random;
+
+    int delay = 75; // Mutável
+    Difficulty difficulty = null;
 
     GamePanel() {
         random = new Random();
@@ -29,7 +40,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        startGame();
     }
 
     public void startGame() {
@@ -41,41 +51,53 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        draw(g);
+        if (!running && difficulty == null) {
+            drawMenu(g);
+        } else {
+            draw(g);
+        }
+    }
+
+    public void drawMenu(Graphics g) {
+        g.setColor(Color.white);
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Selecione a Dificuldade",
+                (SCREEN_WIDTH - metrics.stringWidth("Selecione a Dificuldade")) / 2,
+                SCREEN_HEIGHT / 3);
+
+        g.setFont(new Font("Ink Free", Font.BOLD, 20));
+        g.drawString("1 - Fácil", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 30);
+        g.drawString("2 - Médio", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2);
+        g.drawString("3 - Difícil", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 + 30);
     }
 
     public void draw(Graphics g) {
         if (running) {
-            // maçã
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
-            // cobra
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
                     g.setColor(Color.green);
-                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 } else {
                     g.setColor(new Color(45, 180, 0));
-                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
+                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             }
 
-            // pontuação
             g.setColor(Color.white);
-            g.setFont(new Font("Ink Free", Font.BOLD, 24));
-            FontMetrics metrics = getFontMetrics(g.getFont());
-            g.drawString("Pontos: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Pontos: " + applesEaten)) / 2, g.getFont().getSize());
+            g.setFont(new Font("Ink Free", Font.BOLD, 20));
+            g.drawString("Pontuação: " + applesEaten, 20, g.getFont().getSize());
             g.drawString("Nível: " + (1 + (applesEaten / 5)), 20, g.getFont().getSize() + 30);
-
         } else {
             gameOver(g);
         }
     }
 
     public void newApple() {
-        appleX = random.nextInt((int)(SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
-        appleY = random.nextInt((int)(SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
+        appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+        appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
     }
 
     public void move() {
@@ -85,10 +107,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         switch (direction) {
-            case 'U' -> y[0] -= UNIT_SIZE;
-            case 'D' -> y[0] += UNIT_SIZE;
-            case 'L' -> x[0] -= UNIT_SIZE;
-            case 'R' -> x[0] += UNIT_SIZE;
+            case 'U': y[0] = y[0] - UNIT_SIZE; break;
+            case 'D': y[0] = y[0] + UNIT_SIZE; break;
+            case 'L': x[0] = x[0] - UNIT_SIZE; break;
+            case 'R': x[0] = x[0] + UNIT_SIZE; break;
         }
     }
 
@@ -101,16 +123,20 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    public void updateSpeed() {
+        if (applesEaten % 5 == 0 && delay > 25) {
+            delay -= 5;
+            timer.setDelay(delay);
+        }
+    }
+
     public void checkCollisions() {
-        // cabeça com corpo
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
-                break;
             }
         }
 
-        // paredes
         if (x[0] < 0 || x[0] >= SCREEN_WIDTH || y[0] < 0 || y[0] >= SCREEN_HEIGHT) {
             running = false;
         }
@@ -121,24 +147,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
-        // pontuação final
-        g.setColor(Color.white);
-        g.setFont(new Font("Ink Free", Font.BOLD, 30));
-        FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Pontos: " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Pontos: " + applesEaten)) / 2, g.getFont().getSize());
-
-        // mensagem de game over
         g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 75));
-        FontMetrics metrics2 = getFontMetrics(g.getFont());
-        g.drawString("FIM DE JOGO", (SCREEN_WIDTH - metrics2.stringWidth("FIM DE JOGO")) / 2, SCREEN_HEIGHT / 2);
-    }
-
-    public void updateSpeed() {
-        if(applesEaten % 5 == 0 && delay > 25) { // aumenta a cada 5 maçãs, minimo de 25ms
-            delay -= 5;
-            timer.setDelay(delay);
-        }
+        g.setFont(new Font("Ink Free", Font.BOLD, 40));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Game Over",
+                (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2,
+                SCREEN_HEIGHT / 2);
     }
 
     @Override
@@ -154,19 +168,40 @@ public class GamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+            if (difficulty == null) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_1:
+                        difficulty = Difficulty.EASY;
+                        delay = 125;
+                        break;
+                    case KeyEvent.VK_2:
+                        difficulty = Difficulty.MEDIUM;
+                        delay = 75;
+                        break;
+                    case KeyEvent.VK_3:
+                        difficulty = Difficulty.HARD;
+                        delay = 40;
+                        break;
+                }
+                if (difficulty != null) {
+                    startGame();
+                }
+                return;
+            }
+
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT -> {
+                case KeyEvent.VK_LEFT:
                     if (direction != 'R') direction = 'L';
-                }
-                case KeyEvent.VK_RIGHT -> {
+                    break;
+                case KeyEvent.VK_RIGHT:
                     if (direction != 'L') direction = 'R';
-                }
-                case KeyEvent.VK_UP -> {
+                    break;
+                case KeyEvent.VK_UP:
                     if (direction != 'D') direction = 'U';
-                }
-                case KeyEvent.VK_DOWN -> {
+                    break;
+                case KeyEvent.VK_DOWN:
                     if (direction != 'U') direction = 'D';
-                }
+                    break;
             }
         }
     }
