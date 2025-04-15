@@ -2,13 +2,10 @@ package SnakeGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     enum Difficulty {
         EASY, MEDIUM, HARD
@@ -34,12 +31,17 @@ public class GamePanel extends JPanel implements ActionListener {
     int delay = 75; // Mutável
     Difficulty difficulty = null;
 
+    Rectangle easyButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 - 50, 120, 30);
+    Rectangle mediumButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2, 120, 30);
+    Rectangle hardButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 + 50, 120, 30);
+
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+        this.addMouseListener(this);
     }
 
     public void startGame() {
@@ -67,10 +69,17 @@ public class GamePanel extends JPanel implements ActionListener {
                 SCREEN_HEIGHT / 3);
 
         g.setFont(new Font("Ink Free", Font.BOLD, 20));
-        g.drawString("1 - Fácil", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 30);
-        g.drawString("2 - Médio", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2);
-        g.drawString("3 - Difícil", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 + 30);
+        g.setColor(Color.lightGray);
+        g.fillRect(easyButton.x, easyButton.y, easyButton.width, easyButton.height);
+        g.fillRect(mediumButton.x, mediumButton.y, mediumButton.width, mediumButton.height);
+        g.fillRect(hardButton.x, hardButton.y, hardButton.width, hardButton.height);
+
+        g.setColor(Color.black);
+        g.drawString("1 - Fácil", easyButton.x + 20, easyButton.y + 22);
+        g.drawString("2 - Médio", mediumButton.x + 20, mediumButton.y + 22);
+        g.drawString("3 - Difícil", hardButton.x + 20, hardButton.y + 22);
     }
+
 
     public void draw(Graphics g) {
         if (running) {
@@ -164,6 +173,32 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         repaint();
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(difficulty == null) {
+            Point p = e.getPoint();
+
+            if(easyButton.contains(p)) {
+                difficulty = Difficulty.EASY;
+                delay = 125;
+                startGame();
+            } else if (mediumButton.contains(p)) {
+                difficulty = Difficulty.MEDIUM;
+                delay = 75;
+                startGame();
+            } else if (hardButton.contains(p)) {
+                difficulty = Difficulty.HARD;
+                delay = 40;
+                startGame();
+            }
+        }
+    }
+
+    @Override public void mousePressed(MouseEvent e) {}
+    @Override public void mouseReleased(MouseEvent e) {}
+    @Override public void mouseEntered(MouseEvent e) {}
+    @Override public void mouseExited(MouseEvent e) {}
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
