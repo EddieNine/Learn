@@ -37,6 +37,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     Rectangle restartButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 + 40, 120, 30);
 
+    Rectangle backToMenuButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 + 80, 160, 30);
+
+
 
     GamePanel() {
         random = new Random();
@@ -176,7 +179,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
         g.setColor(Color.black);
         g.drawString("Reiniciar", restartButton.x + 20, restartButton.y + 20);
+
+        // Botão de Voltar ao Menu
+        g.setColor(Color.lightGray);
+        g.fillRect(backToMenuButton.x, backToMenuButton.y, backToMenuButton.width, backToMenuButton.height);
+        g.setColor(Color.black);
+        g.drawString("Voltar ao Menu", backToMenuButton.x + 10, backToMenuButton.y + 20);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -212,9 +222,25 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
             Point p = e.getPoint();
             if (restartButton.contains(p)) {
                 restartGame();
+            } else if (backToMenuButton.contains(p)) {
+                returnToMenu();
             }
         }
     }
+
+    public void returnToMenu() {
+        difficulty = null;
+        running = false;
+        applesEaten = 0;
+        bodyParts = 6;
+        direction = 'R';
+        for (int i = 0; i < bodyParts; i++) {
+            x[i] = 0;
+            y[i] = 0;
+        }
+        repaint();
+    }
+
 
 
     public void restartGame() {
