@@ -35,6 +35,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     Rectangle mediumButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2, 120, 30);
     Rectangle hardButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 + 50, 120, 30);
 
+    Rectangle restartButton = new Rectangle(SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2 + 40, 120, 30);
+
+
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -157,11 +160,22 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     public void gameOver(Graphics g) {
         g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
-        FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over",
-                (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2,
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2 - 40);
+
+        g.setFont(new Font("Ink Free", Font.BOLD, 20));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.setColor(Color.white);
+        g.drawString("Pontuação: " + applesEaten,
+                (SCREEN_WIDTH - metrics2.stringWidth("Pontuação: " + applesEaten)) / 2,
                 SCREEN_HEIGHT / 2);
+
+        // Botão de Reiniciar
+        g.setColor(Color.lightGray);
+        g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
+        g.setColor(Color.black);
+        g.drawString("Reiniciar", restartButton.x + 20, restartButton.y + 20);
     }
 
     @Override
@@ -176,10 +190,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(difficulty == null) {
+        if (difficulty == null) {
             Point p = e.getPoint();
 
-            if(easyButton.contains(p)) {
+            // Verificação para seleção da dificuldade
+            if (easyButton.contains(p)) {
                 difficulty = Difficulty.EASY;
                 delay = 125;
                 startGame();
@@ -192,7 +207,29 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 delay = 40;
                 startGame();
             }
+        } else if (!running) {
+            // Verificação de clique no botão "Reiniciar" quando o jogo acabou
+            Point p = e.getPoint();
+            if (restartButton.contains(p)) {
+                restartGame();
+            }
         }
+    }
+
+
+    public void restartGame() {
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        running = true;
+        for (int i = 0; i < bodyParts; i++) {
+            x[i] = 0;
+            y[i] = 0;
+        }
+        newApple();
+        timer.setDelay(delay);
+        timer.restart();
+        repaint();
     }
 
     @Override public void mousePressed(MouseEvent e) {}
