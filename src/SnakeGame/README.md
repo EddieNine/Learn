@@ -25,8 +25,6 @@ Um clássico **Jogo da Cobrinha** desenvolvido em **Java** com interface gráfic
 
 ## 📷 Captura de tela
 
-> ⚠️ Substitua o caminho da imagem abaixo após adicionar o print na pasta do projeto.
-
 ![SnakeGame Screenshot](./screenshot.png)
 
 ---
