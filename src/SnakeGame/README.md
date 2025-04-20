@@ -53,5 +53,5 @@ Este projeto está sob a licença MIT.
 Sugestões, melhorias e pull requests são sempre bem-vindos!
 
 👨‍💻 Desenvolvedor
- . Edcarlos Cruz (@EddieNine)
+ - Edcarlos Cruz (@EddieNine)
 
